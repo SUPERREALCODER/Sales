@@ -1,8 +1,17 @@
 # agents/tools.py
 
+from urllib import response
+from wsgiref import headers
+
+
+from intent import API_URL
+
+
 def inventory_node(state: dict):
     print("   [Inventory Agent]: Checking stock database...")
     item = state.get("cart_item", "").lower()
+                               
+   
     
     # --- EDGE CASE SIMULATION ---
     # We force "red" items to fail to prove the agent can recover

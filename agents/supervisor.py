@@ -1,10 +1,35 @@
 # agents/supervisor.py
+import requests
 
 def supervisor_node(state: dict):
     # 1. READ INPUT & CONTEXT
     last_message = state["messages"][-1] if state["messages"] else ""
     current_status = state.get("item_status")
     previous_step = state.get("next_step")
+
+    API_URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-mnli"
+    headers = {
+                "Authorization": f"Bearer ",
+        }   
+
+    def query(payload):
+        response = requests.post(API_URL, headers=headers, json=payload)
+        return response.json()
+
+    output = query({
+       "inputs": last_message,
+         "parameters": {
+             "candidate_labels": [
+        "purchase inquiry",      # "I want to buy..."
+        "check inventory",       # "Do you have stock?"
+        "payment issue",         # "My card failed"
+        "shipping status",       # "Where is my order?"
+        "affirmation",           # "Yes", "Okay"
+        "denial"                 # "No", "Cancel"
+        ]
+         }
+        })
+    print(output[0]["label"])
     
     # 2. DECIDE NEXT STEP (The "Brain")
     
