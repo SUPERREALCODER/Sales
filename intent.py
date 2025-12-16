@@ -3,7 +3,7 @@ import requests
 
 API_URL = "https://router.huggingface.co/hf-inference/models/facebook/bart-large-mnli"
 headers = {
-    "Authorization": f"Bearer ",
+    "Authorization": f"Bearer os.getenv('HF_API_KEY')",
 }
 
 def query(payload):
