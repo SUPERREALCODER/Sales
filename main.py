@@ -6,7 +6,7 @@ from agents.supervisor import supervisor_node
 
 # 1. SETUP THE GRAPH (Same wiring as before)
 workflow = StateGraph(RetailState)
-
+print(workflow)
 workflow.add_node("supervisor", supervisor_node)
 workflow.add_node("inventory", inventory_node)
 workflow.add_node("recommendation", recommendation_node)

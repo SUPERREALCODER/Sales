@@ -15,6 +15,12 @@ def supervisor_node(state: dict):
         print(f"[Master Agent]: Intent 'Purchase' detected for '{item_name}'. Checking Inventory.")
         return {"next_step": "inventory", "cart_item": item_name}
     
+    elif previous_step == "payment":
+        return {"next_step": "fulfillment"}
+    
+    elif previous_step == "fulfillment":
+        return {"next_step": "end"}
+    
     # Case B: Inventory said "Out of Stock" (THE AGENTIC EDGE CASE)
     elif current_status == "out_of_stock" and previous_step != "recommendation":
         print("[Master Agent]: Item is missing. Triggering Recommendation Strategy.")
@@ -28,8 +34,7 @@ def supervisor_node(state: dict):
         return {"next_step": "payment"}
         
     # Case D: Payment done, move to fulfillment
-    elif previous_step == "payment":
-        return {"next_step": "fulfillment"}
+    
         
     # Case E: Done
     else:
